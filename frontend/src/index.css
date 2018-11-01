@@ -128,3 +128,16 @@ html {
     top: 10%important;
   }
 }
+
+.content-container {
+  background-color: rbga(255, 255, 255, 0.6);
+  padding-left: 10vw;
+  padding-right: 10vw;
+  margin: 0 auto;
+  padding-bottom: 5vh;
+}
+.content {
+  padding: 5vh 5vw;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px 10px 10px;
+}

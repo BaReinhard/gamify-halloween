@@ -7,6 +7,8 @@ import "./App.css";
 import CreateQR from "./CreateQR";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
+import About from "./About";
+import LeaderBoard from "./LeaderBoard";
 
 class App extends Component {
   constructor() {
@@ -71,12 +73,18 @@ class App extends Component {
                 <LinkContainer to="/about" activeClassName="active">
                   <NavItem onClick={this.onHide}>About </NavItem>
                 </LinkContainer>
+                <LinkContainer to="/leaderboard" activeClassName="active">
+                  <NavItem onClick={this.onHide}>Leaderboard </NavItem>
+                </LinkContainer>
               </Nav>
             </Modal.Body>
           </Modal>
           <Switch>
             <Route exact path={"/"} component={HomePage} />
             <Route path="/createQR" component={CreateQR} />
+            <Route path="/about" component={About} />
+            <Route path="/leaderboard" component={LeaderBoard} />
+
             <Route path="/404" component={HomePage} />
             <Redirect path="*" to="/404" />
           </Switch>
