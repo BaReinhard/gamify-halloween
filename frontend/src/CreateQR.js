@@ -1,21 +1,30 @@
 import React, { Component } from "react";
 import "./App.css";
-import { Modal } from "react-bootstrap";
+import {
+  Modal,
+  FormGroup,
+  FormControl,
+  ControlLabel,
+  HelpBlock,
+  Button
+} from "react-bootstrap";
 import QR from "qrcode.react";
 import axios from "axios";
 const baseURL =
-  "https://gamify-halloween-dot-uplifted-elixir-203119.appspot.com/api/addcount";
+  "https://gamify-halloween-dot-uplifted-elixir-203119.appspot.com/success";
 class CreateQR extends Component {
   constructor() {
     super();
     this.state = {
       value: "",
       showQR: false,
-      modal: false
+      modal: false,
+      generatedValue: "",
+      disableForm: false
     };
   }
   handleChange = event => {
-    this.setState({ value: event.target.value });
+    this.setState({ value: event.target.value, error: false });
   };
   handleSubmit = event => {
     axios
@@ -24,12 +33,16 @@ class CreateQR extends Component {
         this.setState({
           modal: true,
           usernameResponse: response.data.status,
-          showQR: true
+          error: response.data.status.contains("taken"),
+          showQR: !response.data.status.contains("taken"),
+          generatedValue: this.state.value,
+          disableForm: true
         });
       })
       .catch(err => {
         this.setState({
           modal: true,
+          error: true,
           usernameResponse:
             "An Error has Occurred Saving your Username. Please try again."
         });
@@ -40,6 +53,19 @@ class CreateQR extends Component {
       modal: false
     });
   };
+  getValidationState() {
+    const length = this.state.value.length;
+    const val = this.state.value;
+    let returnVal = null;
+    if (this.state.error) {
+      returnVal = "error";
+    } else if (length >= 5) {
+      returnVal = "success";
+    } else if (length > 0) {
+      returnVal = "error";
+    }
+    return returnVal;
+  }
   render() {
     return (
       <div className="Component">
@@ -58,20 +84,39 @@ class CreateQR extends Component {
             />
           )}
         </div>
-        <h3>Enter User Name</h3>
-        <p>
-          <input
+        <FormGroup
+          style={{
+            width: "50vw",
+            margin: "0 auto",
+            padding: "20px",
+            backgroundColor: "rgba(255,255,255,0.9)",
+            borderRadius: "10px 10px"
+          }}
+          validationState={this.getValidationState()}
+        >
+          <ControlLabel>Enter a Unique User Name</ControlLabel>
+          <FormControl
             type="text"
             name="title"
-            value={this.state.value}
             onChange={this.handleChange.bind(this)}
+            value={this.state.value}
+            disabled={this.state.disableForm}
           />
-        </p>
-        <p>
-          <button className="btn btn-primary" onClick={this.handleSubmit}>
+          <FormControl.Feedback />
+          <HelpBlock>
+            Username must be at least 5 characters, must not include spaces, and
+            can only contain alphanumeric characters.
+          </HelpBlock>
+          <Button
+            type="button"
+            className="btn btn-primary"
+            onClick={this.handleSubmit}
+            disabled={this.state.disableForm}
+          >
             Submit
-          </button>
-        </p>
+          </Button>
+        </FormGroup>
+
         <Modal
           show={this.state.modal}
           onHide={this.onHide}

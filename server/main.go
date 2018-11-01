@@ -8,6 +8,7 @@ import (
 
 	"github.com/bareinhard/gamify-halloween/server/common"
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 )
 
 var hashmap map[string]bool
@@ -39,8 +40,12 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	response, err := common.ReadBody(r.Body)
 	if err != nil {
-		fmt.Printf("%v", err)
+		log.Errorf(ctx, "%v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		json.NewEncoder(w).Encode(common.LeaderboardResponse{Error: err.Error()})
+		return
 	}
+	log.Infof(ctx, "Here is the response: %+v", response)
 	success, err := common.AddUsername(ctx, response.Username)
 	if success {
 		w.WriteHeader(http.StatusOK)

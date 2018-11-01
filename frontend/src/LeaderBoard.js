@@ -2,12 +2,24 @@ import React, { Component } from "react";
 import "./App.css";
 import axios from "axios";
 import { Modal } from "react-bootstrap";
+import { BootstrapTable, TableHeaderColumn } from "react-bootstrap-table";
 
 class LeaderBoard extends Component {
   constructor() {
     super();
     this.state = {
-      users: [],
+      users: [
+        {
+          name: "Brett",
+          treats: ["", "", ""],
+          length: 3
+        },
+        {
+          name: "br",
+          treats: ["", "", "", "", "", ""],
+          length: 6
+        }
+      ],
       loading: false,
       error: false,
       errorDescription: ""
@@ -21,7 +33,12 @@ class LeaderBoard extends Component {
         console.log(response.data);
         console.log(response.data.error === undefined);
         if (response.data.error === undefined) {
-          this.setState({ loading: false, users: response.data.users });
+          let clientUsers = response.data.users.map(user => ({
+            name: user.name,
+            length: user.treats.length,
+            treats: user.treats
+          }));
+          this.setState({ loading: false, users: clientUsers });
           return;
         } else {
           this.setState({
@@ -47,22 +64,30 @@ class LeaderBoard extends Component {
   };
   render() {
     return (
-      <div className="Component content-container">
+      <div className="Component">
         <h1>LeaderBoard</h1>
-        <table class="table">
-          <tr>
-            <th>Username</th>
-            <th>Count</th>
-          </tr>
-          {this.state.users.map(user => {
-            return (
-              <tr>
-                <td>{user.name}</td>
-                <td>{user.treats.length}</td>
-              </tr>
-            );
-          })}
-        </table>
+        <div
+          style={{
+            backgroundColor: "rgba(255,255,255,0.9",
+            padding: "20px",
+            borderRadius: "10px 10px",
+            width: "75vw",
+            margin: "0 auto"
+          }}
+        >
+          <BootstrapTable
+            style={{ padding: "0px" }}
+            data={this.state.users}
+            striped
+            hover
+            condensed
+          >
+            <TableHeaderColumn dataField="name" isKey>
+              User
+            </TableHeaderColumn>
+            <TableHeaderColumn dataField="length">Count</TableHeaderColumn>
+          </BootstrapTable>
+        </div>
         <Modal
           show={this.state.error}
           onHide={this.hideError}

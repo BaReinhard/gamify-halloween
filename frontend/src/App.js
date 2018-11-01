@@ -9,6 +9,7 @@ import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
 import About from "./About";
 import LeaderBoard from "./LeaderBoard";
+import Success from "./Success";
 
 class App extends Component {
   constructor() {
@@ -84,6 +85,7 @@ class App extends Component {
             <Route path="/createQR" component={CreateQR} />
             <Route path="/about" component={About} />
             <Route path="/leaderboard" component={LeaderBoard} />
+            <Route path="/success" component={Success} />
 
             <Route path="/404" component={HomePage} />
             <Redirect path="*" to="/404" />

@@ -107,7 +107,7 @@ func HashPass(ctx context.Context, password string) (string, error) {
 	return base64.URLEncoding.EncodeToString(hash), nil
 }
 func ReadBody(body io.ReadCloser) (*FrontEndRequest, error) {
-	var br *FrontEndRequest
+	br := &FrontEndRequest{}
 	b, err := ioutil.ReadAll(body)
 	if err != nil {
 		return nil, fmt.Errorf("Error Reading Body: %v", err)
@@ -178,7 +178,7 @@ func AddPoint(ctx context.Context, hash, UID string) error {
 	if err != nil {
 		return err
 	}
-	cmt, err := client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
+	_, err = client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
 		point := &DatastorePoint{UniqueID: UID, Point: 1}
 		key := datastore.NameKey(os.Getenv("DATASTORE_KIND"), hash, nil)
 		_, err := tx.Put(key, point)
@@ -192,7 +192,6 @@ func AddPoint(ctx context.Context, hash, UID string) error {
 	} else if err != nil && err == datastore.ErrNoSuchEntity {
 		return nil
 	}
-	fmt.Printf("%+v", cmt)
 
 	return nil
 }
