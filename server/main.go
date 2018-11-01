@@ -17,10 +17,23 @@ func main() {
 
 	http.HandleFunc("/api/addcount", addCountHandler)
 	http.HandleFunc("/api/addusername", addUsernameHandler)
+	http.HandleFunc("/api/leaderboard", retrieveLeaderboard)
 
 	appengine.Main()
 }
-
+func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
+	ctx := appengine.NewContext(r)
+	users, err := common.GetUsernames(ctx)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(""))
+		return
+	}
+	resp := common.LeaderboardResponse{Users: users}
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(resp)
+	return
+}
 func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	ctx := appengine.NewContext(r)

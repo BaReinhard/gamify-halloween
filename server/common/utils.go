@@ -28,7 +28,7 @@ func AddUsername(ctx context.Context, username string) (bool, error) {
 		key := datastore.NameKey("GamifyHalloweenUsernames", username, nil)
 		err := tx.Get(key, irrelevantInterface)
 		if err != nil && err == datastore.ErrNoSuchEntity {
-			irrelevantInterface = &DatastoreUsername{Added: time.Now().Unix()}
+			irrelevantInterface = &DatastoreUsername{Added: time.Now().Unix(), Name: username}
 			_, err := tx.Put(key, irrelevantInterface)
 			if err != nil {
 				log.Infof(ctx, "Error: %v", err)
@@ -49,6 +49,53 @@ func AddUsername(ctx context.Context, username string) (bool, error) {
 
 	return true, nil
 }
+func GetUsernames(ctx context.Context) ([]*UsernamesResponse, error) {
+	var usernames []*UsernamesResponse
+	usernames = []*UsernamesResponse{}
+	client, err := datastore.NewClient(ctx, os.Getenv("PROJECT_ID"))
+	if err != nil {
+		return nil, err
+	}
+	_, err = client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
+		query := datastore.NewQuery("GamifyHalloweenUsernames").KeysOnly()
+		keys, err := client.GetAll(ctx, query, nil)
+		if err != nil {
+			return fmt.Errorf("Error Retrieving all Keys: %v", err)
+		}
+		users := make([]*DatastoreUsername, len(keys))
+		for i := range users {
+			users[i] = &DatastoreUsername{}
+		}
+		err = tx.GetMulti(keys, users)
+		if err != nil {
+			return fmt.Errorf("Error Getting Multiple Values: %v", err)
+		}
+		for _, user := range users {
+			pointQuery := datastore.NewQuery("gamify-halloween").Filter("UniqueID =", user.Name).KeysOnly()
+			pointsKeys, err := client.GetAll(ctx, pointQuery, nil)
+			if err != nil {
+				return fmt.Errorf("Error Getting All Points for User: %v\t%v", user.Name, err)
+			}
+			points := make([]*DatastorePoint, len(pointsKeys))
+			for i := range points {
+				points[i] = &DatastorePoint{}
+			}
+			err = tx.GetMulti(pointsKeys, points)
+			if err != nil {
+				return fmt.Errorf("Error Getting Multiple Points for User: %v\t%v", user.Name, err)
+			}
+			usernames = append(usernames, &UsernamesResponse{Name: user.Name, Treats: points})
+		}
+		return nil
+	})
+	if err != nil {
+		log.Infof(ctx, "Error: %v", err)
+
+		return nil, err
+	}
+
+	return usernames, nil
+}
 
 func HashPass(ctx context.Context, password string) (string, error) {
 	hash, err := scrypt.Key([]byte(password), []byte(os.Getenv("SALT")), 1<<14, 8, 1, 24)
@@ -65,7 +112,7 @@ func ReadBody(body io.ReadCloser) (*FrontEndRequest, error) {
 	if err != nil {
 		return nil, fmt.Errorf("Error Reading Body: %v", err)
 	}
-	err = json.Unmarshal(b, &br)
+	err = json.Unmarshal(b, br)
 	if err != nil {
 		return nil, fmt.Errorf("Error Unmarshalling Body Bytes: %v", err)
 	}
