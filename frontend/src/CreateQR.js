@@ -20,7 +20,8 @@ class CreateQR extends Component {
       showQR: false,
       modal: false,
       generatedValue: "",
-      disableForm: false
+      disableForm: false,
+      error: false
     };
   }
   handleChange = event => {

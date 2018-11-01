@@ -25,6 +25,7 @@ func AddUsername(ctx context.Context, username string) (bool, error) {
 	}
 	_, err = client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
 		var irrelevantInterface *DatastoreUsername
+		irrelevantInterface = &DatastoreUsername{}
 		key := datastore.NameKey("GamifyHalloweenUsernames", username, nil)
 		err := tx.Get(key, irrelevantInterface)
 		if err != nil && err == datastore.ErrNoSuchEntity {
