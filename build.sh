@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "newuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-adduser newuser
+useradd -m -p encryptedPassword newuser
 
 apt-get install -y python python-pip wget build-essential curl file git
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
