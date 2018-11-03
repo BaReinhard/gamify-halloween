@@ -17,6 +17,7 @@ cp -R gamify-halloween/* /root/go/src/github.com/bareinhard/gamify-halloween/
 cd frontend
 npm install
 npm run build && rm -Rf ../server/static && cp -R build ../server/static
+cd ..
 SHA=$(git rev-parse --short origin/$CIRCLE_BRANCH)
 pip install jinja2
 if [ "$CIRCLE_BRANCH" = "master" ];
