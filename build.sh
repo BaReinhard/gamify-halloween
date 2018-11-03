@@ -9,7 +9,6 @@ then
 	export PROJECT_ID=heph-core
 	export ACCOUNT=heph-core@appspot.gserviceaccount.com
 	echo $PROD_KEY_FILE > ./server/key.json
-	cat ./server/key.json
 elif [ "$CIRCLE_BRANCH" = "development" ];
 then
 	echo "Starting Development Build"
@@ -27,7 +26,8 @@ sys.stdout.write(
 	jinja2.Template(sys.stdin.read()
 ).render(env=os.environ))' < ./templates/app.jinja > ./server/app.yaml
 
-gcloud auth activate-service-account --key-file=./server/key.json
+sudo gcloud auth activate-service-account --key-file=./server/key.json
+sudo gcloud --quiet config set project $PROJECT_ID
 
 echo y | gcloud app deploy ./server/app.yaml \
 	--project=$PROJECT_ID \
