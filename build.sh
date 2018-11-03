@@ -1,21 +1,22 @@
 #!/bin/bash
-echo "newuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-useradd -m -p encryptedPassword newuser
-
-apt-get install -y python python-pip wget build-essential curl file git
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-su - newuser -c "/usr/local/bin/brew install node"
-su - newuser -c "/usr/local/bin/brew install go@1.10"
+# echo "newuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+# useradd -m -p encryptedPassword newuser
+add-apt-repository ppa:gophers/archive
+apt-get update
+curl -sL https://deb.nodesource.com/setup_10.x | bash -
+apt-get install -y python python-pip wget build-essential curl file git golang-1.10-go nodejs
+# su - newuser -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'
+# su - newuser -c "/usr/local/bin/brew install node"
+# su - newuser -c "/usr/local/bin/brew install go@1.10"
 # wget -O /tmp/go1.10.2.linux-amd64.tar.gz https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
 # tar -xzf /tmp/go1.10.2.linux-amd64.tar.gz
 # mv ./go /usr/local/
-/usr/local/bin/go/bin/go get google.golang.org/appengine
-/usr/local/bin/go/bin/go get cloud.google.com/go/datastore
-/usr/local/bin/go/bin/go get google.golang.org/api/cloudkms/v1
-/usr/local/bin/go/bin/go get google.golang.org/appengine/log
-/usr/local/bin/go/bin/go get golang.org/x/crypto/bcrypt
+/usr/lib/go-1.10/bin/go get google.golang.org/appengine
+/usr/lib/go-1.10/bin/go get cloud.google.com/go/datastore
+/usr/lib/go-1.10/bin/go get google.golang.org/api/cloudkms/v1
+/usr/lib/go-1.10/bin/go get google.golang.org/appengine/log
+/usr/lib/go-1.10/bin/go get golang.org/x/crypto/bcrypt
 
-ls /root/go/src
 git clone https://github.com/BaReinhard/gamify-halloween
 mkdir -p /root/go/src/github.com/bareinhard/gamify-halloween
 cp -R gamify-halloween/* /root/go/src/github.com/bareinhard/gamify-halloween/
