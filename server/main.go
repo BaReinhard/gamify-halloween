@@ -41,14 +41,12 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	response, err := common.ReadBody(r.Body)
 	if err != nil {
 		log.Errorf(ctx, "%v", err)
-		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(common.LeaderboardResponse{Error: err.Error()})
 		return
 	}
 	log.Infof(ctx, "Here is the response: %+v", response)
 	success, err := common.AddUsername(ctx, response.Username)
 	if success {
-		w.WriteHeader(http.StatusOK)
 		json.NewEncoder(w).Encode(common.UserNameResponse{Status: "Thank you! We have successfully saved your username"})
 		return
 	}

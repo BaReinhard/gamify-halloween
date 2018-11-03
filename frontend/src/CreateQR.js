@@ -10,8 +10,7 @@ import {
 } from "react-bootstrap";
 import QR from "qrcode.react";
 import axios from "axios";
-const baseURL =
-  "https://gamify-halloween-dot-uplifted-elixir-203119.appspot.com/success";
+const baseURL = "https://www.gamifyhalloween.com/success";
 class CreateQR extends Component {
   constructor() {
     super();
@@ -20,7 +19,7 @@ class CreateQR extends Component {
       showQR: false,
       modal: false,
       generatedValue: "",
-      disableForm: false,
+      disableForm: true,
       error: false
     };
   }
@@ -34,13 +33,14 @@ class CreateQR extends Component {
         this.setState({
           modal: true,
           usernameResponse: response.data.status,
-          error: response.data.status.contains("taken"),
-          showQR: !response.data.status.contains("taken"),
+          error: response.data.status.includes("taken"),
+          showQR: !response.data.status.includes("taken"),
           generatedValue: this.state.value,
           disableForm: true
         });
       })
       .catch(err => {
+        console.log(err);
         this.setState({
           modal: true,
           error: true,
@@ -62,6 +62,7 @@ class CreateQR extends Component {
       returnVal = "error";
     } else if (length >= 5) {
       returnVal = "success";
+      this.setState({ disableForm: false });
     } else if (length > 0) {
       returnVal = "error";
     }
@@ -98,10 +99,9 @@ class CreateQR extends Component {
           <ControlLabel>Enter a Unique User Name</ControlLabel>
           <FormControl
             type="text"
-            name="title"
+            name="username"
             onChange={this.handleChange.bind(this)}
             value={this.state.value}
-            disabled={this.state.disableForm}
           />
           <FormControl.Feedback />
           <HelpBlock>
