@@ -62,7 +62,9 @@ class CreateQR extends Component {
       returnVal = "error";
     } else if (length >= 5) {
       returnVal = "success";
-      this.setState({ disableForm: false });
+      if (this.state.disableForm) {
+        this.setState({ disableForm: false });
+      }
     } else if (length > 0) {
       returnVal = "error";
     }
