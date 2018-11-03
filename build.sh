@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sudo apt-get install -y python python-pip
-SHA=$(git rev-parse --short origin/$CIRCLe_BRANCH)
+SHA=$(git rev-parse --short origin/$CIRCLE_BRANCH)
 pip install jinja2
 if [ "$CIRCLE_BRANCH" = "master" ];
 then
