@@ -9,7 +9,9 @@ jobs:
       - image: google/cloud-sdk
     steps:
       - checkout
-      - run: ./build.sh
+      - run: |
+          echo $DEPLOYER_KEY | sudo gcloud auth activate-service-account --key-file=-
+          ./build.sh
 notify:
   webhooks:
     # A list of hook hashes, containing the URL field
