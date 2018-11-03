@@ -9,7 +9,7 @@ jobs:
       - image: circleci/golang:1.9
     steps:
       - checkout
-      - run: ls && pwd
+      - run: ./build.sh
 notify:
   webhooks:
     # A list of hook hashes, containing the URL field
