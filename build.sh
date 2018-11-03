@@ -26,9 +26,9 @@ sys.stdout.write(
 	jinja2.Template(sys.stdin.read()
 ).render(env=os.environ))' < ./templates/app.jinja > ./server/app.yaml
 
-# sudo gcloud auth activate-service-account --key-file=./server/key.json
-# sudo gcloud --quiet config set project $PROJECT_ID
-# sudo gcloud --quiet config set account $ACCOUNT
+gcloud auth activate-service-account --key-file=./server/key.json
+gcloud --quiet config set project $PROJECT_ID
+gcloud --quiet config set account $ACCOUNT
 
 echo y | gcloud app deploy ./server/app.yaml \
 	--project=$PROJECT_ID \
