@@ -1,6 +1,9 @@
 #!/bin/bash
 
 sudo apt-get install -y python python-pip
+git clone https://github.com/BaReinhard/gamify-halloween
+mkdir -p /root/go/src/github.com/gamify-halloween
+cp -R gamify-halloween/* /root/go/src/github.com/gamify-halloween/
 SHA=$(git rev-parse --short origin/$CIRCLE_BRANCH)
 pip install jinja2
 if [ "$CIRCLE_BRANCH" = "master" ];
