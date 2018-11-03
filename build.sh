@@ -1,6 +1,7 @@
 #!/bin/bash
 
 sudo apt-get install -y python python-pip
+ls /usr/local/
 go get google.golang.org/appengine
 go get cloud.google.com/go/datastore
 go get google.golang.org/api/cloudkms/v1
