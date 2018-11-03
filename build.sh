@@ -1,16 +1,17 @@
 #!/bin/bash
 
-apt-get install -y python python-pip wget build-essential curl git m4 ruby texinfo libbz2-dev libcurl4-openssl-dev libexpat-dev libncurses-dev zlib1g-dev
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/linuxbrew/go/install)"
+apt-get install -y python python-pip wget build-essential curl file git
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 brew install node
-wget -O /tmp/go1.10.2.linux-amd64.tar.gz https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
-tar -xzf /tmp/go1.10.2.linux-amd64.tar.gz
-mv ./go /usr/local/
-/usr/local/go/bin/go get google.golang.org/appengine
-/usr/local/go/bin/go get cloud.google.com/go/datastore
-/usr/local/go/bin/go get google.golang.org/api/cloudkms/v1
-/usr/local/go/bin/go get google.golang.org/appengine/log
-/usr/local/go/bin/go get golang.org/x/crypto/bcrypt
+brew install go@1.10
+# wget -O /tmp/go1.10.2.linux-amd64.tar.gz https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
+# tar -xzf /tmp/go1.10.2.linux-amd64.tar.gz
+# mv ./go /usr/local/
+go get google.golang.org/appengine
+go get cloud.google.com/go/datastore
+go get google.golang.org/api/cloudkms/v1
+go get google.golang.org/appengine/log
+go get golang.org/x/crypto/bcrypt
 
 ls /root/go/src
 git clone https://github.com/BaReinhard/gamify-halloween
