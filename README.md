@@ -6,7 +6,7 @@ A trick or treater will navigate to the create qr code endpoint and create a new
 
 ### Possible Recognition
 
-Top trick or treaters will get a call out on the site, fb page, or other (still aggregating ideas)
+Top trick or treaters will get a call out on the site, fb page, or other (still aggregating ideas).
 
 ### QR Link
 
