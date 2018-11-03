@@ -1,7 +1,9 @@
 #!/bin/bash
 
 sudo apt-get install -y python python-pip
-ls /usr/local/
+wget -O /tmp/go.tar.gz https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz
+tar -xvzf /tmp/go1.11.2.linux-amd64.tar.gz
+cp -R /tmp/go /usr/local/
 go get google.golang.org/appengine
 go get cloud.google.com/go/datastore
 go get google.golang.org/api/cloudkms/v1
