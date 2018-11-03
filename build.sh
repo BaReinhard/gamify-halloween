@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt-get install -y python python-pip
+apt-get install -y python python-pip wget
 wget -O /tmp/go.tar.gz https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz
 tar -xvzf /tmp/go1.11.2.linux-amd64.tar.gz
 cp -R /tmp/go /usr/local/
