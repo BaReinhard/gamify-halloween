@@ -1,10 +1,8 @@
 #!/bin/bash
 # echo "newuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 # useradd -m -p encryptedPassword newuser
-add-apt-repository ppa:gophers/archive
-apt-get update
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
-apt-get install -y python python-pip wget build-essential curl file git golang-1.10-go nodejs
+apt-get install -y gcc g++ make python python-pip wget build-essential curl file git golang-go nodejs
 # su - newuser -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'
 # su - newuser -c "/usr/local/bin/brew install node"
 # su - newuser -c "/usr/local/bin/brew install go@1.10"
