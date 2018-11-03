@@ -9,6 +9,7 @@ then
 	export PROJECT_ID=heph-core
 	export ACCOUNT=heph-core@appspot.gserviceaccount.com
 	echo $PROD_KEY_FILE > ./server/key.json
+	cat ./server/key.json
 elif [ "$CIRCLE_BRANCH" = "development" ];
 then
 	echo "Starting Development Build"
