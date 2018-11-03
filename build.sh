@@ -2,8 +2,8 @@
 
 apt-get install -y python python-pip wget build-essential curl file git
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-brew install node
-brew install go@1.10
+su - circleci -c "brew install node"
+su - circleci -c "brew install go@1.10"
 # wget -O /tmp/go1.10.2.linux-amd64.tar.gz https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
 # tar -xzf /tmp/go1.10.2.linux-amd64.tar.gz
 # mv ./go /usr/local/
