@@ -28,6 +28,7 @@ sys.stdout.write(
 
 sudo gcloud auth activate-service-account --key-file=./server/key.json
 sudo gcloud --quiet config set project $PROJECT_ID
+sudo gcloud --quiet config set account $ACCOUNT
 
 echo y | gcloud app deploy ./server/app.yaml \
 	--project=$PROJECT_ID \
