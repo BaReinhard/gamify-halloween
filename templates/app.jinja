@@ -1,0 +1,20 @@
+runtime: go
+api_version: go1
+
+service: default
+handlers:
+  # All URLs are handled by the Go application script
+  - url: /api/.*
+    script: _go_app
+  - url: /(.*\..+)
+    static_files: static/\1
+    upload: static/(.*\.*)
+  - url: /(.*)
+    static_files: static/index.html
+    upload: static/index.html
+
+env_variables:
+  PROJECT_ID: "{{env[PROJECT_ID]}}"
+  DATASTORE_KIND: "{{env[DATASTORE_KIND]}}"
+  GOOGLE_APPLICATION_CREDENTIALS: "./key.json"
+  SALT: "{{env[SALT]}}"
