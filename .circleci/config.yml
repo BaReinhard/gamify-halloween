@@ -1,0 +1,16 @@
+# Golang CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-go/ for more details
+version: 2
+jobs:
+  build:
+    docker:
+      # specify the version
+      - image: circleci/golang:1.9
+    steps:
+      - checkout
+      - run: ../build.sh
+notify:
+  webhooks:
+    # A list of hook hashes, containing the URL field
+    - url: https://room-alerts-dot-uplifted-elixir-203119.appspot.com/?token=12345
