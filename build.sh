@@ -4,10 +4,10 @@ sudo apt-get install -y python python-pip
 wget -O /tmp/go.tar.gz https://dl.google.com/go/go1.11.2.linux-amd64.tar.gz
 tar -xvzf /tmp/go1.11.2.linux-amd64.tar.gz
 cp -R /tmp/go /usr/local/
-go get google.golang.org/appengine
-go get cloud.google.com/go/datastore
-go get google.golang.org/api/cloudkms/v1
-go get google.golang.org/appengine/log
+/usr/local/go/bin/go get google.golang.org/appengine
+/usr/local/go/bin/go get cloud.google.com/go/datastore
+/usr/local/go/bin/go get google.golang.org/api/cloudkms/v1
+/usr/local/go/bin/go get google.golang.org/appengine/log
 ls /root/go/src
 git clone https://github.com/BaReinhard/gamify-halloween
 mkdir -p /root/go/src/github.com/bareinhard/gamify-halloween
