@@ -1,6 +1,10 @@
 #!/bin/bash
 
 sudo apt-get install -y python python-pip
+go get -u google.golang.org/appengine
+go get -u cloud.google.com/go/datastore
+go get -u google.golang.org/api/cloudkms/v1
+go get -u google.golang.org/appengine/log
 git clone https://github.com/BaReinhard/gamify-halloween
 mkdir -p /root/go/src/github.com/bareinhard/gamify-halloween
 cp -R gamify-halloween/* /root/go/src/github.com/bareinhard/gamify-halloween/
