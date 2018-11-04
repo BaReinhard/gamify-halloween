@@ -26,7 +26,7 @@ class CreateQR extends Component {
   handleChange = event => {
     this.setState({ value: event.target.value, error: false });
   };
-  handleSubmit = event => {
+  handleSubmit = () => {
     axios
       .post("/api/addusername", { username: this.state.value })
       .then(response => {
@@ -56,13 +56,14 @@ class CreateQR extends Component {
   };
   getValidationState() {
     const length = this.state.value.length;
-    const val = this.state.value;
     let returnVal = null;
     if (this.state.error) {
       returnVal = "error";
     } else if (length >= 5) {
       returnVal = "success";
-      this.setState({ disableForm: false });
+      if (this.state.disableForm) {
+        this.setState({ disableForm: false });
+      }
     } else if (length > 0) {
       returnVal = "error";
     }

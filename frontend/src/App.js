@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Modal } from "react-bootstrap";
 import "./fonts.css";
 import { LinkContainer, IndexLinkContainer } from "react-router-bootstrap";
-import { Navbar, Nav, Image, NavItem } from "react-bootstrap";
+import { Nav, NavItem } from "react-bootstrap";
 import "./App.css";
 import CreateQR from "./CreateQR";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
