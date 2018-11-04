@@ -15,6 +15,7 @@ export GOPATH=/root/go
 /usr/lib/go/bin/go get google.golang.org/api/cloudkms/v1
 /usr/lib/go/bin/go get google.golang.org/appengine/log
 /usr/lib/go/bin/go get golang.org/x/crypto/bcrypt
+/usr/lib/go/bin/go get go.opencensus.io/trace
 
 git clone https://github.com/BaReinhard/gamify-halloween
 mkdir -p /root/go/src/github.com/bareinhard/gamify-halloween
