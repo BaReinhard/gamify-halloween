@@ -24,6 +24,7 @@ func main() {
 }
 func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
+	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
 	users, err := common.GetUsernames(ctx)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -38,6 +39,7 @@ func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
 func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	ctx := appengine.NewContext(r)
+	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
 	response, err := common.ReadBody(r.Body)
 	if err != nil {
 		log.Errorf(ctx, "%v", err)
@@ -56,6 +58,7 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 }
 func addCountHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
+	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
 	uniqueID := r.URL.Query().Get("uid")
 	addingIP := r.RemoteAddr
 	if !hashmap[uniqueID+addingIP] {
