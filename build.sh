@@ -9,11 +9,11 @@ apt-get install -y gcc g++ make python python-pip wget build-essential curl file
 # wget -O /tmp/go1.10.2.linux-amd64.tar.gz https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
 # tar -xzf /tmp/go1.10.2.linux-amd64.tar.gz
 # mv ./go /usr/local/
-/usr/lib/go-1.10/bin/go get google.golang.org/appengine
-/usr/lib/go-1.10/bin/go get cloud.google.com/go/datastore
-/usr/lib/go-1.10/bin/go get google.golang.org/api/cloudkms/v1
-/usr/lib/go-1.10/bin/go get google.golang.org/appengine/log
-/usr/lib/go-1.10/bin/go get golang.org/x/crypto/bcrypt
+/usr/lib/gobin/go get google.golang.org/appengine
+/usr/lib/go/bin/go get cloud.google.com/go/datastore
+/usr/lib/go/bin/go get google.golang.org/api/cloudkms/v1
+/usr/lib/go/bin/go get google.golang.org/appengine/log
+/usr/lib/go/bin/go get golang.org/x/crypto/bcrypt
 
 git clone https://github.com/BaReinhard/gamify-halloween
 mkdir -p /root/go/src/github.com/bareinhard/gamify-halloween
