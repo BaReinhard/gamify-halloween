@@ -31,12 +31,15 @@ then
 	echo "Starting Production Build"
 	export PROJECT_ID=heph-core
 	export ACCOUNT=heph-core@appspot.gserviceaccount.com
+	export HOST_URL=https://gamifyhalloween.com
 	echo $PROD_KEY_FILE > ./server/key.json
 elif [ "$CIRCLE_BRANCH" = "development" ];
 then
 	echo "Starting Development Build"
 	export PROJECT_ID=heph-core-dev
 	export ACCOUNT=heph-core-dev@appspot.gserviceaccount.com
+	export HOST_URL=https://heph-core-dev.appspot.com
+
 	echo $DEV_KEY_FILE > ./server/key.json
 else
 	echo "Build Not Supported for this branch"
