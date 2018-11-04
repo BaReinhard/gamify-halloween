@@ -47,9 +47,11 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Here is the response: %+v", response)
 	success, err := common.AddUsername(ctx, response.Username)
 	if success {
+		log.Infof(ctx, "SUCCESS: %v",success)
 		json.NewEncoder(w).Encode(common.UserNameResponse{Status: "Thank you! We have successfully saved your username"})
 		return
 	}
+	log.Infof(ctx, "FAIL: %v %v",success,err)
 	json.NewEncoder(w).Encode(common.UserNameResponse{Status: "Sorry, it looks as though that username has already been taken."})
 }
 func addCountHandler(w http.ResponseWriter, r *http.Request) {
