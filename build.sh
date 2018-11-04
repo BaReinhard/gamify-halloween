@@ -2,13 +2,13 @@
 # echo "newuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 # useradd -m -p encryptedPassword newuser
 curl -sL https://deb.nodesource.com/setup_10.x | bash -
-apt-get install -y gcc g++ make python python-pip wget build-essential curl file git golang-go nodejs
+apt-get install -y gcc g++ make python python-pip wget build-essential curl file git nodejs
 # su - newuser -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"'
 # su - newuser -c "/usr/local/bin/brew install node"
 # su - newuser -c "/usr/local/bin/brew install go@1.10"
-# wget -O /tmp/go1.10.2.linux-amd64.tar.gz https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
-# tar -xzf /tmp/go1.10.2.linux-amd64.tar.gz
-# mv ./go /usr/local/
+wget -O /tmp/go1.10.2.linux-amd64.tar.gz https://dl.google.com/go/go1.10.2.linux-amd64.tar.gz
+tar -xzf /tmp/go1.10.2.linux-amd64.tar.gz
+mv ./go /usr/lib/
 export GOPATH=/root/go
 /usr/lib/go/bin/go get google.golang.org/appengine
 /usr/lib/go/bin/go get cloud.google.com/go/datastore
