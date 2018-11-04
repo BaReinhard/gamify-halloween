@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import QR from "qrcode.react";
 import axios from "axios";
-const baseURL = "https://www.gamifyhalloween.com/success";
+const baseURL = `${process.env.HOST_URL}/success`;
 class CreateQR extends Component {
   constructor() {
     super();

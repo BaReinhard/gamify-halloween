@@ -21,6 +21,7 @@ import (
 func AddUsername(ctx context.Context, username string) (bool, error) {
 	client, err := datastore.NewClient(ctx, os.Getenv("PROJECT_ID"))
 	if err != nil {
+		log.Infof(ctx, "%v", err)
 		return false, err
 	}
 	_, err = client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {

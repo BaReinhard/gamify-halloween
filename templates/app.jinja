@@ -14,7 +14,8 @@ handlers:
     upload: static/index.html
 
 env_variables:
-  PROJECT_ID: "{{env[PROJECT_ID]}}"
-  DATASTORE_KIND: "{{env[DATASTORE_KIND]}}"
+  PROJECT_ID: "{{env['PROJECT_ID']}}"
+  DATASTORE_KIND: "{{env['DATASTORE_KIND']}}"
   GOOGLE_APPLICATION_CREDENTIALS: "./key.json"
-  SALT: "{{env[SALT]}}"
+  SALT: "{{env['SALT']}}"
+  HOST_URL: "{{env['HOST_URL']}}"
