@@ -10,7 +10,3 @@ jobs:
     steps:
       - checkout
       - run: ./build.sh
-notify:
-  webhooks:
-    # A list of hook hashes, containing the URL field
-    - url: https://room-alerts-dot-uplifted-elixir-203119.appspot.com/?token=12345
