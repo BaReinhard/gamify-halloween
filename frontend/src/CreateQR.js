@@ -23,9 +23,7 @@ class CreateQR extends Component {
       error: false
     };
   }
-  componentDidMount() {
-    console.log(baseURL);
-  }
+
   handleChange = event => {
     this.setState({ value: event.target.value, error: false });
   };
