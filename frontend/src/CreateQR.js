@@ -10,7 +10,7 @@ import {
 } from "react-bootstrap";
 import QR from "qrcode.react";
 import axios from "axios";
-const baseURL = `${process.env.HOST_URL}/success`;
+const baseURL = `${process.env.REACT_APP_HOST_URL}/success`;
 class CreateQR extends Component {
   constructor() {
     super();
@@ -22,6 +22,9 @@ class CreateQR extends Component {
       disableForm: true,
       error: false
     };
+  }
+  componentDidMount() {
+    console.log(baseURL);
   }
   handleChange = event => {
     this.setState({ value: event.target.value, error: false });
