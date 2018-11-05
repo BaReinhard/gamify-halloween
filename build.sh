@@ -20,10 +20,7 @@ export GOPATH=/root/go
 git clone https://github.com/BaReinhard/gamify-halloween
 mkdir -p /root/go/src/github.com/bareinhard/gamify-halloween
 cp -R gamify-halloween/* /root/go/src/github.com/bareinhard/gamify-halloween/
-cd frontend
-npm install
-npm run build && rm -Rf ../server/static && cp -R build ../server/static
-cd ..
+
 SHA=$(git rev-parse --short origin/$CIRCLE_BRANCH)
 pip install jinja2
 if [ "$CIRCLE_BRANCH" = "master" ];
@@ -31,19 +28,24 @@ then
 	echo "Starting Production Build"
 	export PROJECT_ID=heph-core
 	export ACCOUNT=heph-core@appspot.gserviceaccount.com
-	export HOST_URL=https://gamifyhalloween.com
+	export REACT_APP_HOST_URL=https://gamifyhalloween.com
 	echo $PROD_KEY_FILE > ./server/key.json
 elif [ "$CIRCLE_BRANCH" = "development" ];
 then
 	echo "Starting Development Build"
 	export PROJECT_ID=heph-core-dev
 	export ACCOUNT=heph-core-dev@appspot.gserviceaccount.com
-	export HOST_URL=https://heph-core-dev.appspot.com
+	export REACT_APP_HOST_URL=https://heph-core-dev.appspot.com
 
 	echo $DEV_KEY_FILE > ./server/key.json
 else
 	echo "Build Not Supported for this branch"
 fi
+
+cd frontend
+npm install
+npm run build && rm -Rf ../server/static && cp -R build ../server/static
+cd ..
 
 python -c 'import os
 import sys
