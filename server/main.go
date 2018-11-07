@@ -33,13 +33,14 @@ func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
 	}
 	referer := r.Referer()
 	userAgent := r.UserAgent()
+	log.Infof(ctx, "Host URL: %v", os.Getenv("HOST_URL"))
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
 	log.Infof(ctx, "Referer: %v", referer)
 	log.Infof(ctx, "Agent: %v", userAgent)
 	log.Infof(ctx, "Headers:")
 	for _, h := range r.Header {
-		for _, hs := range h {
-			log.Infof(ctx, hs)
+		for key, hs := range h {
+			log.Infof(ctx, "%s : %s", key, hs)
 		}
 	}
 	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
@@ -74,8 +75,8 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Agent: %v", userAgent)
 	log.Infof(ctx, "Headers:")
 	for _, h := range r.Header {
-		for _, hs := range h {
-			log.Infof(ctx, hs)
+		for key, hs := range h {
+			log.Infof(ctx, "%s : %s", key, hs)
 		}
 	}
 	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
@@ -114,8 +115,8 @@ func addCountHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Agent: %v", userAgent)
 	log.Infof(ctx, "Headers:")
 	for _, h := range r.Header {
-		for _, hs := range h {
-			log.Infof(ctx, hs)
+		for key, hs := range h {
+			log.Infof(ctx, "%s : %s", key, hs)
 		}
 	}
 	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
