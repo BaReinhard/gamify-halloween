@@ -25,6 +25,7 @@ func main() {
 func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
+	log.Infof(ctx, "Referer: %v", r.Referer())
 	users, err := common.GetUsernames(ctx)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -40,6 +41,8 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	ctx := appengine.NewContext(r)
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
+	log.Infof(ctx, "Referer: %v", r.Referer())
+
 	response, err := common.ReadBody(r.Body)
 	if err != nil {
 		log.Errorf(ctx, "%v", err)
@@ -49,16 +52,18 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Here is the response: %+v", response)
 	success, err := common.AddUsername(ctx, response.Username)
 	if success {
-		log.Infof(ctx, "SUCCESS: %v",success)
+		log.Infof(ctx, "SUCCESS: %v", success)
 		json.NewEncoder(w).Encode(common.UserNameResponse{Status: "Thank you! We have successfully saved your username"})
 		return
 	}
-	log.Infof(ctx, "FAIL: %v %v",success,err)
+	log.Infof(ctx, "FAIL: %v %v", success, err)
 	json.NewEncoder(w).Encode(common.UserNameResponse{Status: "Sorry, it looks as though that username has already been taken."})
 }
 func addCountHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
+	log.Infof(ctx, "Referer: %v", r.Referer())
+
 	uniqueID := r.URL.Query().Get("uid")
 	addingIP := r.RemoteAddr
 	if !hashmap[uniqueID+addingIP] {
