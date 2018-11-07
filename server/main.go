@@ -36,6 +36,12 @@ func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
 	log.Infof(ctx, "Referer: %v", referer)
 	log.Infof(ctx, "Agent: %v", userAgent)
+	log.Infof(ctx, "Headers:")
+	for _, h := range r.Header {
+		for _, hs := range h {
+			log.Infof(ctx, hs)
+		}
+	}
 	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
 		log.Errorf(ctx, "Bad Referer: %v", referer)
 		w.WriteHeader(http.StatusUnauthorized)
@@ -66,6 +72,12 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
 	log.Infof(ctx, "Referer: %v", referer)
 	log.Infof(ctx, "Agent: %v", userAgent)
+	log.Infof(ctx, "Headers:")
+	for _, h := range r.Header {
+		for _, hs := range h {
+			log.Infof(ctx, hs)
+		}
+	}
 	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
 		log.Errorf(ctx, "Bad Referer: %v", referer)
 		w.WriteHeader(http.StatusUnauthorized)
@@ -100,6 +112,12 @@ func addCountHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
 	log.Infof(ctx, "Referer: %v", referer)
 	log.Infof(ctx, "Agent: %v", userAgent)
+	log.Infof(ctx, "Headers:")
+	for _, h := range r.Header {
+		for _, hs := range h {
+			log.Infof(ctx, hs)
+		}
+	}
 	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
 		log.Errorf(ctx, "Bad Referer: %v", referer)
 		w.WriteHeader(http.StatusUnauthorized)
