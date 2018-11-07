@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"os"
+	"strings"
 
 	"net/http"
 
@@ -24,8 +26,22 @@ func main() {
 }
 func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
+	if r.Method != "GET" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.Write([]byte(""))
+		return
+	}
+	referer := r.Referer()
+	userAgent := r.UserAgent()
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
-	log.Infof(ctx, "Referer: %v", r.Referer())
+	log.Infof(ctx, "Referer: %v", referer)
+	log.Infof(ctx, "Agent: %v", userAgent)
+	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
+		log.Errorf(ctx, "Bad Referer: %v", referer)
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Unauthorized"))
+		return
+	}
 	users, err := common.GetUsernames(ctx)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -40,9 +56,22 @@ func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
 func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	ctx := appengine.NewContext(r)
+	if r.Method != "POST" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.Write([]byte(""))
+		return
+	}
+	referer := r.Referer()
+	userAgent := r.UserAgent()
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
-	log.Infof(ctx, "Referer: %v", r.Referer())
-
+	log.Infof(ctx, "Referer: %v", referer)
+	log.Infof(ctx, "Agent: %v", userAgent)
+	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
+		log.Errorf(ctx, "Bad Referer: %v", referer)
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Unauthorized"))
+		return
+	}
 	response, err := common.ReadBody(r.Body)
 	if err != nil {
 		log.Errorf(ctx, "%v", err)
@@ -61,9 +90,22 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 }
 func addCountHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := appengine.NewContext(r)
+	if r.Method != "POST" {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		w.Write([]byte(""))
+		return
+	}
+	referer := r.Referer()
+	userAgent := r.UserAgent()
 	log.Infof(ctx, "Visitor: %v", r.RemoteAddr)
-	log.Infof(ctx, "Referer: %v", r.Referer())
-
+	log.Infof(ctx, "Referer: %v", referer)
+	log.Infof(ctx, "Agent: %v", userAgent)
+	if !strings.HasPrefix(referer, os.Getenv("HOST_URL")) {
+		log.Errorf(ctx, "Bad Referer: %v", referer)
+		w.WriteHeader(http.StatusUnauthorized)
+		w.Write([]byte("Unauthorized"))
+		return
+	}
 	uniqueID := r.URL.Query().Get("uid")
 	addingIP := r.RemoteAddr
 	if !hashmap[uniqueID+addingIP] {

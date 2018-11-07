@@ -8,18 +8,7 @@ class LeaderBoard extends Component {
   constructor() {
     super();
     this.state = {
-      users: [
-        {
-          name: "Brett",
-          treats: ["", "", ""],
-          length: 3
-        },
-        {
-          name: "br",
-          treats: ["", "", "", "", "", ""],
-          length: 6
-        }
-      ],
+      users: [],
       loading: false,
       error: false,
       errorDescription: ""
