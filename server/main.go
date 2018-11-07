@@ -38,8 +38,8 @@ func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Referer: %v", referer)
 	log.Infof(ctx, "Agent: %v", userAgent)
 	log.Infof(ctx, "Headers:")
-	for _, h := range r.Header {
-		for key, hs := range h {
+	for key, h := range r.Header {
+		for _, hs := range h {
 			log.Infof(ctx, "%s : %s", key, hs)
 		}
 	}
@@ -74,8 +74,8 @@ func addUsernameHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Referer: %v", referer)
 	log.Infof(ctx, "Agent: %v", userAgent)
 	log.Infof(ctx, "Headers:")
-	for _, h := range r.Header {
-		for key, hs := range h {
+	for key, h := range r.Header {
+		for _, hs := range h {
 			log.Infof(ctx, "%s : %s", key, hs)
 		}
 	}
@@ -114,8 +114,8 @@ func addCountHandler(w http.ResponseWriter, r *http.Request) {
 	log.Infof(ctx, "Referer: %v", referer)
 	log.Infof(ctx, "Agent: %v", userAgent)
 	log.Infof(ctx, "Headers:")
-	for _, h := range r.Header {
-		for key, hs := range h {
+	for key, h := range r.Header {
+		for _, hs := range h {
 			log.Infof(ctx, "%s : %s", key, hs)
 		}
 	}
