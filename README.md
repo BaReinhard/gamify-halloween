@@ -11,3 +11,7 @@ Top trick or treaters will get a call out on the site, fb page, or other (still 
 ### QR Link
 
 ![Link to Working Page](https://user-images.githubusercontent.com/13072194/47818797-fb999c00-dd15-11e8-8497-a9cc2fc0fb8d.png)
+
+
+### Try out the official (for now) Snapchat Lense
+https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=76e9520a09ec4c15b8f31aeda0f217e5&metadata=01
