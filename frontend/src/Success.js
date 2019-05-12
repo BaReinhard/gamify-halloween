@@ -15,7 +15,7 @@ class Success extends Component {
     var url = new URL(window.location);
     var username = url.searchParams.get("uid");
     axios
-      .get("/api/addcount?uid=" + username)
+      .post("/api/addcount", { username: username })
       .then(response => {
         if (response.status === 200) {
           this.setState({
