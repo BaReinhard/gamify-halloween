@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
+	"time"
 	"net/http"
 
 	"github.com/bareinhard/gamify-halloween/server/common"
@@ -17,35 +17,37 @@ import (
 
 var hashmap map[string]bool
 var (
-	cpuTemp = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name: "cpu_temperature_celsius",
-		Help: "Current temperature of the CPU.",
-	})
-	hdFailures = prometheus.NewCounterVec(
-		prometheus.CounterOpts{
-			Name: "hd_errors_total",
-			Help: "Number of hard-disk errors.",
-		},
-		[]string{"device"},
-	)
+	httpRequestsResponseTime = prometheus.NewSummary(prometheus.SummaryOpts{
+        Namespace: "http",
+        Name:      "response_time_seconds",
+        Help:      "Request response times",
+    })
 )
 
 func init(){
-	prometheus.MustRegister(cpuTemp)
-	prometheus.MustRegister(hdFailures)
-}
 
+	prometheus.MustRegister(httpRequestsResponseTime)
+}
 func main() {
 	hashmap = map[string]bool{}
 
-	http.HandleFunc("/api/addcount", addCountHandler)
-	http.HandleFunc("/api/addusername", addUsernameHandler)
-	http.HandleFunc("/api/leaderboard", retrieveLeaderboard)
-	http.Handle("/api/metrics", promhttp.Handler())
+	http.Handle("/api/addcount",Middleware(http.HandlerFunc( addCountHandler)))
+	http.Handle("/api/addusername",Middleware(http.HandlerFunc( addUsernameHandler)))
+	http.Handle("/api/leaderboard", Middleware(http.HandlerFunc(retrieveLeaderboard)))
+	http.Handle("/api/metrics",Middleware( promhttp.Handler()))
 
 	appengine.Main()
 }
 
+func Middleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        start := time.Now()
+
+        next.ServeHTTP(w, r)
+
+		httpRequestsResponseTime.Observe(float64(time.Since(start).Nanoseconds()/1000000))
+    })
+}
 
 
 func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
