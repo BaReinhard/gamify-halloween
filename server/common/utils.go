@@ -51,13 +51,14 @@ func AddUsername(ctx context.Context, username string) (bool, error) {
 
 	return true, nil
 }
+var usernames = []*UsernamesResponse{}
 func GetUsernames(ctx context.Context) ([]*UsernamesResponse, error) {
-	var usernames []*UsernamesResponse
-	usernames = []*UsernamesResponse{}
+	
 	client, err := datastore.NewClient(ctx, os.Getenv("PROJECT_ID"))
 	if err != nil {
 		return nil, err
 	}
+	if len(usernames) == 0 { 
 	_, err = client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
 		query := datastore.NewQuery("GamifyHalloweenUsernames").KeysOnly()
 		keys, err := client.GetAll(ctx, query, nil)
@@ -90,12 +91,13 @@ func GetUsernames(ctx context.Context) ([]*UsernamesResponse, error) {
 		}
 		return nil
 	})
+
 	if err != nil {
 		log.Infof(ctx, "Error: %v", err)
 
 		return nil, err
 	}
-
+	}
 	return usernames, nil
 }
 
