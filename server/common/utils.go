@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 	"time"
-	"github.com/patrickmn/go-cache"
+	cache"github.com/patrickmn/go-cache"
 	"cloud.google.com/go/datastore"
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/crypto/scrypt"
