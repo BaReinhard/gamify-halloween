@@ -17,24 +17,17 @@ import (
 
 var hashmap map[string]bool
 var (
-	cpuTemp = prometheus.NewGauge(prometheus.GaugeOpts{
-		Name: "cpu_temperature_celsius",
-		Help: "Current temperature of the CPU.",
-	})
-	hdFailures = prometheus.NewCounterVec(
-		prometheus.CounterOpts{
-			Name: "hd_errors_total",
-			Help: "Number of hard-disk errors.",
-		},
-		[]string{"device"},
-	)
+	httpRequestsResponseTime = prometheus.NewSummary(prometheus.SummaryOpts{
+        Namespace: "http",
+        Name:      "response_time_seconds",
+        Help:      "Request response times",
+    })
 )
 
 func init(){
-	prometheus.MustRegister(cpuTemp)
-	prometheus.MustRegister(hdFailures)
-}
 
+	prometheus.MustRegister(httpRequestsResponseTime)
+}
 func main() {
 	hashmap = map[string]bool{}
 
