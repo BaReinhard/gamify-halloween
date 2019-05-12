@@ -17,6 +17,9 @@ export GOPATH=/root/go
 /usr/lib/go/bin/go get golang.org/x/crypto/bcrypt
 /usr/lib/go/bin/go get go.opencensus.io/trace
 /usr/lib/go/bin/go get github.com/prometheus/client_golang/prometheus
+/usr/lib/go/bin/go get github.com/patrickmn/go-cache
+
+
 
 
 git clone https://github.com/BaReinhard/gamify-halloween
