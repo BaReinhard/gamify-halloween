@@ -19,6 +19,7 @@ import (
 )
 var c *cache.Cache
 func init(){
+	
 	c = cache.New(15*time.Minute, 20*time.Minute)
 }
 
