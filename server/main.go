@@ -45,7 +45,7 @@ func Middleware(next http.Handler) http.Handler {
 
         next.ServeHTTP(w, r)
 
-        httpRequestsResponseTime.Observe(float64(time.Since(start).Seconds()))
+		httpRequestsResponseTime.Observe(float64(time.Since(start).Nanoseconds()/1000000))
     })
 }
 
