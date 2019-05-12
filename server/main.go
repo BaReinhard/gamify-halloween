@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strings"
-
+	"time"
 	"net/http"
 
 	"github.com/bareinhard/gamify-halloween/server/common"
@@ -31,14 +31,23 @@ func init(){
 func main() {
 	hashmap = map[string]bool{}
 
-	http.HandleFunc("/api/addcount", addCountHandler)
-	http.HandleFunc("/api/addusername", addUsernameHandler)
-	http.HandleFunc("/api/leaderboard", retrieveLeaderboard)
-	http.Handle("/api/metrics", promhttp.Handler())
+	http.Handle("/api/addcount",Middleware(http.HandlerFunc( addCountHandler)))
+	http.Handle("/api/addusername",Middleware(http.HandlerFunc( addUsernameHandler)))
+	http.Handle("/api/leaderboard", Middleware(http.HandlerFunc(retrieveLeaderboard)))
+	http.Handle("/api/metrics",Middleware( promhttp.Handler()))
 
 	appengine.Main()
 }
 
+func Middleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        start := time.Now()
+
+        next.ServeHTTP(w, r)
+
+        httpRequestsResponseTime.Observe(float64(time.Since(start).Seconds()))
+    })
+}
 
 
 func retrieveLeaderboard(w http.ResponseWriter, r *http.Request) {
