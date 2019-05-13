@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 	"net/http"
+	_ "github.com/patrickmn/go-cache"
 
 	"github.com/bareinhard/gamify-halloween/server/common"
 	"google.golang.org/appengine"

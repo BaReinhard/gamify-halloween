@@ -9,7 +9,7 @@ import (
 	"io/ioutil"
 	"os"
 	"time"
-
+	cache "github.com/patrickmn/go-cache"
 	"cloud.google.com/go/datastore"
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/crypto/scrypt"
@@ -17,6 +17,11 @@ import (
 	cloudkms "google.golang.org/api/cloudkms/v1"
 	"google.golang.org/appengine/log"
 )
+var c *cache.Cache
+func init(){
+	
+	c = cache.New(15*time.Minute, 20*time.Minute)
+}
 
 func AddUsername(ctx context.Context, username string) (bool, error) {
 	client, err := datastore.NewClient(ctx, os.Getenv("PROJECT_ID"))
@@ -51,13 +56,16 @@ func AddUsername(ctx context.Context, username string) (bool, error) {
 
 	return true, nil
 }
+
 func GetUsernames(ctx context.Context) ([]*UsernamesResponse, error) {
-	var usernames []*UsernamesResponse
-	usernames = []*UsernamesResponse{}
+	usernames := []*UsernamesResponse{}
+	
 	client, err := datastore.NewClient(ctx, os.Getenv("PROJECT_ID"))
 	if err != nil {
 		return nil, err
 	}
+	usersList, found := c.Get("leaderboards")
+	if !found { 
 	_, err = client.RunInTransaction(ctx, func(tx *datastore.Transaction) error {
 		query := datastore.NewQuery("GamifyHalloweenUsernames").KeysOnly()
 		keys, err := client.GetAll(ctx, query, nil)
@@ -88,14 +96,18 @@ func GetUsernames(ctx context.Context) ([]*UsernamesResponse, error) {
 			}
 			usernames = append(usernames, &UsernamesResponse{Name: user.Name, Treats: points})
 		}
+		c.Set("leaderboards",usernames,cache.DefaultExpiration)
 		return nil
 	})
-	if err != nil {
-		log.Infof(ctx, "Error: %v", err)
 
-		return nil, err
+		if err != nil {
+			log.Infof(ctx, "Error: %v", err)
+
+			return nil, err
+		}
+	}else{
+		usernames = usersList.([]*UsernamesResponse)
 	}
-
 	return usernames, nil
 }
 
