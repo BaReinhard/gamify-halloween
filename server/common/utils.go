@@ -96,7 +96,7 @@ func GetUsernames(ctx context.Context) ([]*UsernamesResponse, error) {
 			}
 			usernames = append(usernames, &UsernamesResponse{Name: user.Name, Treats: points})
 		}
-		c.Set("leadboards",usernames,cache.DefaultExpiration)
+		c.Set("leaderboards",usernames,cache.DefaultExpiration)
 		return nil
 	})
 
