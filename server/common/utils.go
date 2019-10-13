@@ -19,10 +19,10 @@ import (
 )
 var c *cache.Cache
 func init(){
-	
 	c = cache.New(15*time.Minute, 20*time.Minute)
 }
 
+// AddUsername a method to add  username to gcloud datastore, requires a string which must be unique otherwise will return false
 func AddUsername(ctx context.Context, username string) (bool, error) {
 	client, err := datastore.NewClient(ctx, os.Getenv("PROJECT_ID"))
 	if err != nil {
@@ -57,6 +57,7 @@ func AddUsername(ctx context.Context, username string) (bool, error) {
 	return true, nil
 }
 
+// Returns a list of usernames from gcloud datastore
 func GetUsernames(ctx context.Context) ([]*UsernamesResponse, error) {
 	usernames := []*UsernamesResponse{}
 	
@@ -111,6 +112,7 @@ func GetUsernames(ctx context.Context) ([]*UsernamesResponse, error) {
 	return usernames, nil
 }
 
+// Hashes the password inorder to store in the db, a salt is applied. Unhashing is never done, and we only compare hashes
 func HashPass(ctx context.Context, password string) (string, error) {
 	hash, err := scrypt.Key([]byte(password), []byte(os.Getenv("SALT")), 1<<14, 8, 1, 24)
 	if err != nil {
@@ -132,6 +134,7 @@ func ReadBody(body io.ReadCloser) (*FrontEndRequest, error) {
 	}
 	return br, nil
 }
+// Encrypt uses cloudkms to encrypt a string snippets
 func Encrypt(ctx context.Context, snippet string) (string, error) {
 	client, err := google.DefaultClient(ctx, cloudkms.CloudPlatformScope)
 	if err != nil {
@@ -160,9 +163,9 @@ func Encrypt(ctx context.Context, snippet string) (string, error) {
 	}
 	return string(b), nil
 }
+// Compares hashes
 func CheckPass(password string, hash string) bool {
-	err := bcrypt.CompareHashAndPassword([]byte(hash), []byte(password))
-	return err == nil
+	return bcrypt.CompareHashAndPassword([]byte(hash), []byte(password)) == nil
 }
 
 func CheckForUIDHashMatch(ctx context.Context, hash string) (bool, error) {
@@ -187,6 +190,7 @@ func CheckForUIDHashMatch(ctx context.Context, hash string) (bool, error) {
 
 	return true, nil
 }
+// Increment point for scanning QR
 func AddPoint(ctx context.Context, hash, UID string) error {
 	client, err := datastore.NewClient(ctx, os.Getenv("PROJECT_ID"))
 	if err != nil {
