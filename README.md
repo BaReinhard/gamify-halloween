@@ -27,4 +27,4 @@ There is a definite need for UX/Design, if you posses this skill please make PR'
 
 ### Logo Development
 
-We are also looking for contributions around logos for this project. If you have ideas please submit as a PR in the directory logo-assets.
+We are also looking for contributions around logos for this project. If you have ideas please submit as a PR in the directory `logo-assets`.
