@@ -23,3 +23,8 @@ https://www.snapchat.com/unlock/?type=SNAPCODE&uuid=76e9520a09ec4c15b8f31aeda0f2
 I could use help contributing to this project. I come from a background in Backend services along with some background in systems.
 
 There is a definite need for UX/Design, if you posses this skill please make PR's with suggestions in how to make things look/feel better.
+
+
+### Logo Development
+
+We are also looking for contributions around logos for this project. If you have ideas please submit as a PR in the directory `logo-assets`.
